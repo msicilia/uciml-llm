@@ -1,0 +1,17 @@
+We want to build a classification model for the following problem. 
+
+This is the description of the dataset
+{abstract}
+
+And here is the description of each of the features in the dataset.
+{feature_desc}
+
+You can read the dataset using the call to the appropriate tool:
+
+features, targets = read_dataset("{path}")
+
+This returns two dataframes, remember to convert targets to 1d arrays when necessary
+
+Find a classification model that is good enough using scikit-learn for the following dataset
+and provide the code you used. 
+Do not use visualizations, that is, do not use matplotlib, seaborn or other plotting libraries.
