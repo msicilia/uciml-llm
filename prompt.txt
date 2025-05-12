@@ -2,6 +2,7 @@ We want to build a classification model for the following problem.
 
 This is the description of the dataset
 {abstract}
+{summary}
 
 And here is the description of each of the features in the dataset.
 {feature_desc}

@@ -1,1 +1,0 @@
-The accuracy of the classification model on the test set is **0.98**. This indicates that the model performed very well, correctly classifying 98% of the instances in the test dataset.

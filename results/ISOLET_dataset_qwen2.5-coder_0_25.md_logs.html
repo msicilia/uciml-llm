@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+.r1 {color: #d4b702; text-decoration-color: #d4b702}
+.r2 {color: #d4b702; text-decoration-color: #d4b702; font-weight: bold}
+.r3 {font-weight: bold}
+.r4 {color: #008080; text-decoration-color: #008080; font-weight: bold}
+.r5 {color: #ff4689; text-decoration-color: #ff4689; background-color: #272822}
+.r6 {color: #f8f8f2; text-decoration-color: #f8f8f2; background-color: #272822}
+.r7 {color: #66d9ef; text-decoration-color: #66d9ef; background-color: #272822}
+.r8 {background-color: #272822}
+.r9 {color: #959077; text-decoration-color: #959077; background-color: #272822}
+.r10 {color: #e6db74; text-decoration-color: #e6db74; background-color: #272822}
+.r11 {color: #ae81ff; text-decoration-color: #ae81ff; background-color: #272822}
+.r12 {color: #7f7f7f; text-decoration-color: #7f7f7f}
+.r13 {color: #800000; text-decoration-color: #800000; font-weight: bold}
+.r14 {color: #800080; text-decoration-color: #800080; font-weight: bold}
+.r15 {color: #008000; text-decoration-color: #008000}
+.r16 {color: #808000; text-decoration-color: #808000; font-weight: bold}
+.r17 {color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold}
+body {
+    color: #000000;
+    background-color: #ffffff;
+}
+</style>
+</head>
+<body>
+    <pre style="font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><code style="font-family:inherit"><span class="r1">╭───────────────────────────────────────────────────────────────── </span><span class="r2">New run</span><span class="r1"> ─────────────────────────────────────────────────────────────────╮</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">You are an experienced data scientist.</span>                                                                                                    <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3"> </span>                                                                                                                                         <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">We want to build a classification model for the following problem. </span>                                                                       <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">This is the description of the dataset</span>                                                                                                    <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3"> Goal: Predict which letter-name was spoken--a simple classification task.</span>                                                                <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">This data set was generated as follows. 150 subjects spoke the name of each letter of the alphabet twice. Hence, we have 52 training </span>     <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">examples from each speaker. The speakers are grouped into sets of 30 speakers each, and are referred to as isolet1, isolet2, isolet3, </span>    <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">isolet4, and isolet5. The data appears in isolet1+2+3+4.data in sequential order, first the speakers from isolet1, then isolet2, and so </span>  <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">on.  The test set, isolet5, is a separate file.</span>                                                                                           <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">You will note that 3 examples are missing.  I believe they were dropped due to difficulties in recording.</span>                                 <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">I believe this is a good domain for a noisy, perceptual task.  It is also a very good domain for testing the scaling abilities of </span>        <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">algorithms. For example, C4.5 on this domain is slower than backpropagation!</span>                                                              <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">I have formatted the data for C4.5 and provided a C4.5-style names file as well.</span>                                                          <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">And here is the description of each of the features in the dataset.</span>                                                                       <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|     | name         | role    | type        |   demographic |   description |   units | missing_values   |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|----:|:-------------|:--------|:------------|--------------:|--------------:|--------:|:-----------------|</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   0 | Attribute1   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   1 | Attribute2   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   2 | Attribute3   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   3 | Attribute4   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   4 | Attribute5   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   5 | Attribute6   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   6 | Attribute7   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   7 | Attribute8   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   8 | Attribute9   | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|   9 | Attribute10  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  10 | Attribute11  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  11 | Attribute12  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  12 | Attribute13  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  13 | Attribute14  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  14 | Attribute15  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  15 | Attribute16  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  16 | Attribute17  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  17 | Attribute18  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  18 | Attribute19  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  19 | Attribute20  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  20 | Attribute21  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  21 | Attribute22  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  22 | Attribute23  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  23 | Attribute24  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  24 | Attribute25  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  25 | Attribute26  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  26 | Attribute27  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  27 | Attribute28  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  28 | Attribute29  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  29 | Attribute30  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  30 | Attribute31  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  31 | Attribute32  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  32 | Attribute33  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  33 | Attribute34  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  34 | Attribute35  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  35 | Attribute36  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  36 | Attribute37  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  37 | Attribute38  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  38 | Attribute39  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  39 | Attribute40  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  40 | Attribute41  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  41 | Attribute42  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  42 | Attribute43  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  43 | Attribute44  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  44 | Attribute45  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  45 | Attribute46  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  46 | Attribute47  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  47 | Attribute48  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  48 | Attribute49  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  49 | Attribute50  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  50 | Attribute51  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  51 | Attribute52  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  52 | Attribute53  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  53 | Attribute54  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  54 | Attribute55  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  55 | Attribute56  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  56 | Attribute57  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  57 | Attribute58  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  58 | Attribute59  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  59 | Attribute60  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  60 | Attribute61  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  61 | Attribute62  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  62 | Attribute63  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  63 | Attribute64  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  64 | Attribute65  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  65 | Attribute66  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  66 | Attribute67  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  67 | Attribute68  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  68 | Attribute69  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  69 | Attribute70  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  70 | Attribute71  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  71 | Attribute72  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  72 | Attribute73  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  73 | Attribute74  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  74 | Attribute75  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  75 | Attribute76  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  76 | Attribute77  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  77 | Attribute78  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  78 | Attribute79  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  79 | Attribute80  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  80 | Attribute81  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  81 | Attribute82  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  82 | Attribute83  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  83 | Attribute84  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  84 | Attribute85  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  85 | Attribute86  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  86 | Attribute87  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  87 | Attribute88  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  88 | Attribute89  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  89 | Attribute90  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  90 | Attribute91  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  91 | Attribute92  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  92 | Attribute93  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  93 | Attribute94  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  94 | Attribute95  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  95 | Attribute96  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  96 | Attribute97  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  97 | Attribute98  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  98 | Attribute99  | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">|  99 | Attribute100 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 100 | Attribute101 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 101 | Attribute102 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 102 | Attribute103 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 103 | Attribute104 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 104 | Attribute105 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 105 | Attribute106 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 106 | Attribute107 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 107 | Attribute108 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 108 | Attribute109 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 109 | Attribute110 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 110 | Attribute111 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 111 | Attribute112 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 112 | Attribute113 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 113 | Attribute114 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 114 | Attribute115 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 115 | Attribute116 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 116 | Attribute117 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 117 | Attribute118 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 118 | Attribute119 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 119 | Attribute120 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 120 | Attribute121 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 121 | Attribute122 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 122 | Attribute123 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 123 | Attribute124 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 124 | Attribute125 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 125 | Attribute126 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 126 | Attribute127 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 127 | Attribute128 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 128 | Attribute129 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 129 | Attribute130 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 130 | Attribute131 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 131 | Attribute132 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 132 | Attribute133 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 133 | Attribute134 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 134 | Attribute135 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 135 | Attribute136 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 136 | Attribute137 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 137 | Attribute138 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 138 | Attribute139 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 139 | Attribute140 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 140 | Attribute141 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 141 | Attribute142 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 142 | Attribute143 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 143 | Attribute144 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 144 | Attribute145 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 145 | Attribute146 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 146 | Attribute147 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 147 | Attribute148 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 148 | Attribute149 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 149 | Attribute150 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 150 | Attribute151 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 151 | Attribute152 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 152 | Attribute153 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 153 | Attribute154 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 154 | Attribute155 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 155 | Attribute156 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 156 | Attribute157 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 157 | Attribute158 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 158 | Attribute159 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 159 | Attribute160 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 160 | Attribute161 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 161 | Attribute162 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 162 | Attribute163 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 163 | Attribute164 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 164 | Attribute165 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 165 | Attribute166 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 166 | Attribute167 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 167 | Attribute168 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 168 | Attribute169 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 169 | Attribute170 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 170 | Attribute171 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 171 | Attribute172 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 172 | Attribute173 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 173 | Attribute174 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 174 | Attribute175 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 175 | Attribute176 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 176 | Attribute177 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 177 | Attribute178 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 178 | Attribute179 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 179 | Attribute180 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 180 | Attribute181 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 181 | Attribute182 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 182 | Attribute183 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 183 | Attribute184 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 184 | Attribute185 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 185 | Attribute186 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 186 | Attribute187 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 187 | Attribute188 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 188 | Attribute189 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 189 | Attribute190 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 190 | Attribute191 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 191 | Attribute192 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 192 | Attribute193 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 193 | Attribute194 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 194 | Attribute195 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 195 | Attribute196 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 196 | Attribute197 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 197 | Attribute198 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 198 | Attribute199 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 199 | Attribute200 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 200 | Attribute201 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 201 | Attribute202 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 202 | Attribute203 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 203 | Attribute204 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 204 | Attribute205 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 205 | Attribute206 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 206 | Attribute207 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 207 | Attribute208 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 208 | Attribute209 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 209 | Attribute210 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 210 | Attribute211 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 211 | Attribute212 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 212 | Attribute213 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 213 | Attribute214 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 214 | Attribute215 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 215 | Attribute216 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 216 | Attribute217 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 217 | Attribute218 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 218 | Attribute219 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 219 | Attribute220 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 220 | Attribute221 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 221 | Attribute222 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 222 | Attribute223 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 223 | Attribute224 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 224 | Attribute225 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 225 | Attribute226 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 226 | Attribute227 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 227 | Attribute228 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 228 | Attribute229 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 229 | Attribute230 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 230 | Attribute231 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 231 | Attribute232 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 232 | Attribute233 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 233 | Attribute234 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 234 | Attribute235 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 235 | Attribute236 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 236 | Attribute237 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 237 | Attribute238 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 238 | Attribute239 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 239 | Attribute240 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 240 | Attribute241 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 241 | Attribute242 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 242 | Attribute243 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 243 | Attribute244 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 244 | Attribute245 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 245 | Attribute246 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 246 | Attribute247 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 247 | Attribute248 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 248 | Attribute249 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 249 | Attribute250 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 250 | Attribute251 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 251 | Attribute252 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 252 | Attribute253 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 253 | Attribute254 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 254 | Attribute255 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 255 | Attribute256 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 256 | Attribute257 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 257 | Attribute258 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 258 | Attribute259 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 259 | Attribute260 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 260 | Attribute261 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 261 | Attribute262 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 262 | Attribute263 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 263 | Attribute264 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 264 | Attribute265 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 265 | Attribute266 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 266 | Attribute267 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 267 | Attribute268 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 268 | Attribute269 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 269 | Attribute270 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 270 | Attribute271 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 271 | Attribute272 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 272 | Attribute273 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 273 | Attribute274 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 274 | Attribute275 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 275 | Attribute276 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 276 | Attribute277 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 277 | Attribute278 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 278 | Attribute279 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 279 | Attribute280 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 280 | Attribute281 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 281 | Attribute282 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 282 | Attribute283 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 283 | Attribute284 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 284 | Attribute285 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 285 | Attribute286 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 286 | Attribute287 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 287 | Attribute288 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 288 | Attribute289 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 289 | Attribute290 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 290 | Attribute291 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 291 | Attribute292 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 292 | Attribute293 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 293 | Attribute294 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 294 | Attribute295 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 295 | Attribute296 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 296 | Attribute297 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 297 | Attribute298 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 298 | Attribute299 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 299 | Attribute300 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 300 | Attribute301 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 301 | Attribute302 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 302 | Attribute303 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 303 | Attribute304 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 304 | Attribute305 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 305 | Attribute306 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 306 | Attribute307 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 307 | Attribute308 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 308 | Attribute309 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 309 | Attribute310 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 310 | Attribute311 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 311 | Attribute312 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 312 | Attribute313 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 313 | Attribute314 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 314 | Attribute315 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 315 | Attribute316 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 316 | Attribute317 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 317 | Attribute318 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 318 | Attribute319 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 319 | Attribute320 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 320 | Attribute321 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 321 | Attribute322 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 322 | Attribute323 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 323 | Attribute324 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 324 | Attribute325 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 325 | Attribute326 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 326 | Attribute327 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 327 | Attribute328 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 328 | Attribute329 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 329 | Attribute330 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 330 | Attribute331 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 331 | Attribute332 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 332 | Attribute333 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 333 | Attribute334 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 334 | Attribute335 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 335 | Attribute336 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 336 | Attribute337 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 337 | Attribute338 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 338 | Attribute339 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 339 | Attribute340 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 340 | Attribute341 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 341 | Attribute342 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 342 | Attribute343 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 343 | Attribute344 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 344 | Attribute345 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 345 | Attribute346 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 346 | Attribute347 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 347 | Attribute348 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 348 | Attribute349 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 349 | Attribute350 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 350 | Attribute351 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 351 | Attribute352 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 352 | Attribute353 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 353 | Attribute354 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 354 | Attribute355 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 355 | Attribute356 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 356 | Attribute357 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 357 | Attribute358 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 358 | Attribute359 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 359 | Attribute360 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 360 | Attribute361 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 361 | Attribute362 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 362 | Attribute363 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 363 | Attribute364 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 364 | Attribute365 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 365 | Attribute366 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 366 | Attribute367 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 367 | Attribute368 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 368 | Attribute369 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 369 | Attribute370 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 370 | Attribute371 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 371 | Attribute372 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 372 | Attribute373 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 373 | Attribute374 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 374 | Attribute375 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 375 | Attribute376 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 376 | Attribute377 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 377 | Attribute378 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 378 | Attribute379 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 379 | Attribute380 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 380 | Attribute381 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 381 | Attribute382 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 382 | Attribute383 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 383 | Attribute384 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 384 | Attribute385 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 385 | Attribute386 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 386 | Attribute387 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 387 | Attribute388 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 388 | Attribute389 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 389 | Attribute390 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 390 | Attribute391 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 391 | Attribute392 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 392 | Attribute393 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 393 | Attribute394 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 394 | Attribute395 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 395 | Attribute396 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 396 | Attribute397 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 397 | Attribute398 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 398 | Attribute399 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 399 | Attribute400 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 400 | Attribute401 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 401 | Attribute402 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 402 | Attribute403 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 403 | Attribute404 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 404 | Attribute405 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 405 | Attribute406 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 406 | Attribute407 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 407 | Attribute408 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 408 | Attribute409 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 409 | Attribute410 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 410 | Attribute411 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 411 | Attribute412 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 412 | Attribute413 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 413 | Attribute414 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 414 | Attribute415 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 415 | Attribute416 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 416 | Attribute417 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 417 | Attribute418 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 418 | Attribute419 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 419 | Attribute420 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 420 | Attribute421 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 421 | Attribute422 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 422 | Attribute423 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 423 | Attribute424 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 424 | Attribute425 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 425 | Attribute426 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 426 | Attribute427 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 427 | Attribute428 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 428 | Attribute429 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 429 | Attribute430 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 430 | Attribute431 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 431 | Attribute432 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 432 | Attribute433 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 433 | Attribute434 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 434 | Attribute435 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 435 | Attribute436 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 436 | Attribute437 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 437 | Attribute438 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 438 | Attribute439 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 439 | Attribute440 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 440 | Attribute441 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 441 | Attribute442 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 442 | Attribute443 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 443 | Attribute444 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 444 | Attribute445 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 445 | Attribute446 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 446 | Attribute447 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 447 | Attribute448 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 448 | Attribute449 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 449 | Attribute450 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 450 | Attribute451 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 451 | Attribute452 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 452 | Attribute453 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 453 | Attribute454 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 454 | Attribute455 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 455 | Attribute456 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 456 | Attribute457 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 457 | Attribute458 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 458 | Attribute459 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 459 | Attribute460 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 460 | Attribute461 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 461 | Attribute462 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 462 | Attribute463 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 463 | Attribute464 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 464 | Attribute465 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 465 | Attribute466 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 466 | Attribute467 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 467 | Attribute468 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 468 | Attribute469 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 469 | Attribute470 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 470 | Attribute471 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 471 | Attribute472 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 472 | Attribute473 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 473 | Attribute474 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 474 | Attribute475 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 475 | Attribute476 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 476 | Attribute477 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 477 | Attribute478 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 478 | Attribute479 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 479 | Attribute480 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 480 | Attribute481 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 481 | Attribute482 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 482 | Attribute483 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 483 | Attribute484 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 484 | Attribute485 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 485 | Attribute486 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 486 | Attribute487 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 487 | Attribute488 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 488 | Attribute489 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 489 | Attribute490 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 490 | Attribute491 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 491 | Attribute492 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 492 | Attribute493 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 493 | Attribute494 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 494 | Attribute495 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 495 | Attribute496 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 496 | Attribute497 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 497 | Attribute498 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 498 | Attribute499 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 499 | Attribute500 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 500 | Attribute501 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 501 | Attribute502 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 502 | Attribute503 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 503 | Attribute504 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 504 | Attribute505 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 505 | Attribute506 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 506 | Attribute507 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 507 | Attribute508 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 508 | Attribute509 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 509 | Attribute510 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 510 | Attribute511 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 511 | Attribute512 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 512 | Attribute513 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 513 | Attribute514 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 514 | Attribute515 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 515 | Attribute516 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 516 | Attribute517 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 517 | Attribute518 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 518 | Attribute519 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 519 | Attribute520 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 520 | Attribute521 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 521 | Attribute522 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 522 | Attribute523 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 523 | Attribute524 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 524 | Attribute525 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 525 | Attribute526 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 526 | Attribute527 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 527 | Attribute528 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 528 | Attribute529 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 529 | Attribute530 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 530 | Attribute531 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 531 | Attribute532 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 532 | Attribute533 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 533 | Attribute534 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 534 | Attribute535 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 535 | Attribute536 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 536 | Attribute537 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 537 | Attribute538 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 538 | Attribute539 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 539 | Attribute540 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 540 | Attribute541 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 541 | Attribute542 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 542 | Attribute543 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 543 | Attribute544 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 544 | Attribute545 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 545 | Attribute546 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 546 | Attribute547 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 547 | Attribute548 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 548 | Attribute549 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 549 | Attribute550 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 550 | Attribute551 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 551 | Attribute552 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 552 | Attribute553 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 553 | Attribute554 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 554 | Attribute555 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 555 | Attribute556 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 556 | Attribute557 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 557 | Attribute558 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 558 | Attribute559 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 559 | Attribute560 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 560 | Attribute561 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 561 | Attribute562 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 562 | Attribute563 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 563 | Attribute564 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 564 | Attribute565 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 565 | Attribute566 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 566 | Attribute567 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 567 | Attribute568 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 568 | Attribute569 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 569 | Attribute570 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 570 | Attribute571 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 571 | Attribute572 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 572 | Attribute573 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 573 | Attribute574 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 574 | Attribute575 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 575 | Attribute576 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 576 | Attribute577 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 577 | Attribute578 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 578 | Attribute579 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 579 | Attribute580 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 580 | Attribute581 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 581 | Attribute582 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 582 | Attribute583 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 583 | Attribute584 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 584 | Attribute585 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 585 | Attribute586 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 586 | Attribute587 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 587 | Attribute588 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 588 | Attribute589 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 589 | Attribute590 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 590 | Attribute591 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 591 | Attribute592 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 592 | Attribute593 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 593 | Attribute594 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 594 | Attribute595 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 595 | Attribute596 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 596 | Attribute597 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 597 | Attribute598 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 598 | Attribute599 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 599 | Attribute600 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 600 | Attribute601 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 601 | Attribute602 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 602 | Attribute603 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 603 | Attribute604 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 604 | Attribute605 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 605 | Attribute606 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 606 | Attribute607 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 607 | Attribute608 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 608 | Attribute609 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 609 | Attribute610 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 610 | Attribute611 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 611 | Attribute612 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 612 | Attribute613 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 613 | Attribute614 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 614 | Attribute615 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 615 | Attribute616 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 616 | Attribute617 | Feature | Continuous  |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">| 617 | class        | Target  | Categorical |           nan |           nan |     nan | no               |</span>                               <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">You can read the dataset using the call to the appropriate tool:</span>                                                                          <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">features, targets = read_dataset(&quot;./datasets/ISOLET/&quot;)</span>                                                                                    <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">This returns two dataframes, remember to convert targets to 1d arrays when necessary</span>                                                      <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">Find a classification model that is good enough using scikit-learn for the following dataset</span>                                              <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">and provide the code you used. </span>                                                                                                           <span class="r1">│</span>
+<span class="r1">│</span> <span class="r3">Do not use visualizations, that is, do not use matplotlib, seaborn or other plotting libraries.</span>                                           <span class="r1">│</span>
+<span class="r1">│</span>                                                                                                                                           <span class="r1">│</span>
+<span class="r1">╰─ LiteLLMModel - ollama/qwen2.5-coder ─────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>
+<span class="r1">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ </span><span class="r3">Step </span><span class="r4">1</span><span class="r1"> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+ ─ <span class="r3">Executing parsed code:</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  <span class="r5">import</span><span class="r6"> pandas </span><span class="r7">as</span><span class="r6"> pd</span><span class="r8">                                                                                                                      </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.model_selection </span><span class="r5">import</span><span class="r6"> train_test_split</span><span class="r8">                                                                                     </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.preprocessing </span><span class="r5">import</span><span class="r6"> StandardScaler</span><span class="r8">                                                                                         </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.svm </span><span class="r5">import</span><span class="r6"> SVC</span><span class="r8">                                                                                                              </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.metrics </span><span class="r5">import</span><span class="r6"> accuracy_score, classification_report</span><span class="r8">                                                                        </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Load the dataset</span><span class="r8">                                                                                                                       </span>  
+  <span class="r6">features, targets </span><span class="r5">=</span><span class="r6"> read_dataset(</span><span class="r10">&quot;./datasets/ISOLET/&quot;</span><span class="r6">)</span><span class="r8">                                                                                   </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Split the data into training and testing sets</span><span class="r8">                                                                                          </span>  
+  <span class="r6">X_train, X_test, y_train, y_test </span><span class="r5">=</span><span class="r6"> train_test_split(features, targets, test_size</span><span class="r5">=</span><span class="r11">0.2</span><span class="r6">, random_state</span><span class="r5">=</span><span class="r11">42</span><span class="r6">)</span><span class="r8">                                   </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Preprocess the data (scaling)</span><span class="r8">                                                                                                          </span>  
+  <span class="r6">scaler </span><span class="r5">=</span><span class="r6"> StandardScaler()</span><span class="r8">                                                                                                                </span>  
+  <span class="r6">X_train_scaled </span><span class="r5">=</span><span class="r6"> scaler</span><span class="r5">.</span><span class="r6">fit_transform(X_train)</span><span class="r8">                                                                                           </span>  
+  <span class="r6">X_test_scaled </span><span class="r5">=</span><span class="r6"> scaler</span><span class="r5">.</span><span class="r6">transform(X_test)</span><span class="r8">                                                                                                 </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Train a Support Vector Machine classifier</span><span class="r8">                                                                                              </span>  
+  <span class="r6">svm_classifier </span><span class="r5">=</span><span class="r6"> SVC(kernel</span><span class="r5">=</span><span class="r10">&#x27;linear&#x27;</span><span class="r6">)</span><span class="r8">                                                                                                    </span>  
+  <span class="r6">svm_classifier</span><span class="r5">.</span><span class="r6">fit(X_train_scaled, y_train)</span><span class="r8">                                                                                              </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Evaluate the model on the test set</span><span class="r8">                                                                                                     </span>  
+  <span class="r6">y_pred </span><span class="r5">=</span><span class="r6"> svm_classifier</span><span class="r5">.</span><span class="r6">predict(X_test_scaled)</span><span class="r8">                                                                                           </span>  
+  <span class="r6">accuracy </span><span class="r5">=</span><span class="r6"> accuracy_score(y_test, y_pred)</span><span class="r8">                                                                                                </span>  
+  <span class="r6">report </span><span class="r5">=</span><span class="r6"> classification_report(y_test, y_pred)</span><span class="r8">                                                                                           </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r6">print(</span><span class="r10">f&quot;Accuracy: {</span><span class="r6">accuracy</span><span class="r10">:.4f}&quot;</span><span class="r6">)</span><span class="r8">                                                                                                       </span>  
+  <span class="r6">print(</span><span class="r10">&quot;Classification Report:&quot;</span><span class="r6">)</span><span class="r8">                                                                                                          </span>  
+  <span class="r6">print(report)</span><span class="r8">                                                                                                                            </span>  
+ ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+<span class="r3">Execution logs:</span>
+Accuracy: 0.9654
+Classification Report:
+              precision    recall  f1-score   support
+
+         1.0       0.98      0.98      0.98        66
+         2.0       0.78      0.94      0.85        50
+         3.0       0.97      0.97      0.97        62
+         4.0       0.95      0.93      0.94        59
+         5.0       0.94      0.92      0.93        64
+         6.0       1.00      0.95      0.97        59
+         7.0       1.00      0.92      0.96        53
+         8.0       1.00      0.99      0.99        70
+         9.0       1.00      1.00      1.00        56
+        10.0       0.98      0.95      0.96        55
+        11.0       0.95      0.99      0.97        78
+        12.0       1.00      1.00      1.00        67
+        13.0       0.88      0.97      0.92        58
+        14.0       0.97      0.91      0.94        66
+        15.0       1.00      1.00      1.00        54
+        16.0       0.93      0.88      0.90        59
+        17.0       0.98      1.00      0.99        60
+        18.0       1.00      1.00      1.00        52
+        19.0       0.97      1.00      0.98        62
+        20.0       0.96      0.96      0.96        54
+        21.0       1.00      0.98      0.99        51
+        22.0       0.93      0.91      0.92        57
+        23.0       1.00      0.98      0.99        54
+        24.0       0.98      1.00      0.99        58
+        25.0       1.00      1.00      1.00        69
+        26.0       0.97      0.96      0.96        67
+
+    accuracy                           0.97      1560
+   macro avg       0.97      0.96      0.96      1560
+weighted avg       0.97      0.97      0.97      1560
+
+
+Out: None
+<span class="r12">[Step 1: Duration 19.58 seconds| Input tokens: 2,048 | Output tokens: 441]</span>
+<span class="r1">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ </span><span class="r3">Step </span><span class="r4">2</span><span class="r1"> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+ ─ <span class="r3">Executing parsed code:</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  <span class="r5">import</span><span class="r6"> pandas </span><span class="r7">as</span><span class="r6"> pd</span><span class="r8">                                                                                                                      </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.model_selection </span><span class="r5">import</span><span class="r6"> train_test_split</span><span class="r8">                                                                                     </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.preprocessing </span><span class="r5">import</span><span class="r6"> StandardScaler</span><span class="r8">                                                                                         </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.svm </span><span class="r5">import</span><span class="r6"> SVC</span><span class="r8">                                                                                                              </span>  
+  <span class="r5">from</span><span class="r6"> sklearn.metrics </span><span class="r5">import</span><span class="r6"> accuracy_score, classification_report</span><span class="r8">                                                                        </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Load the dataset</span><span class="r8">                                                                                                                       </span>  
+  <span class="r6">features, targets </span><span class="r5">=</span><span class="r6"> read_dataset(</span><span class="r10">&quot;./datasets/ISOLET/&quot;</span><span class="r6">)</span><span class="r8">                                                                                   </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Split the data into training and testing sets</span><span class="r8">                                                                                          </span>  
+  <span class="r6">X_train, X_test, y_train, y_test </span><span class="r5">=</span><span class="r6"> train_test_split(features, targets, test_size</span><span class="r5">=</span><span class="r11">0.2</span><span class="r6">, random_state</span><span class="r5">=</span><span class="r11">42</span><span class="r6">)</span><span class="r8">                                   </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Preprocess the data (scaling)</span><span class="r8">                                                                                                          </span>  
+  <span class="r6">scaler </span><span class="r5">=</span><span class="r6"> StandardScaler()</span><span class="r8">                                                                                                                </span>  
+  <span class="r6">X_train_scaled </span><span class="r5">=</span><span class="r6"> scaler</span><span class="r5">.</span><span class="r6">fit_transform(X_train)</span><span class="r8">                                                                                           </span>  
+  <span class="r6">X_test_scaled </span><span class="r5">=</span><span class="r6"> scaler</span><span class="r5">.</span><span class="r6">transform(X_test)</span><span class="r8">                                                                                                 </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Train a Support Vector Machine classifier</span><span class="r8">                                                                                              </span>  
+  <span class="r6">svm_classifier </span><span class="r5">=</span><span class="r6"> SVC(kernel</span><span class="r5">=</span><span class="r10">&#x27;linear&#x27;</span><span class="r6">)</span><span class="r8">                                                                                                    </span>  
+  <span class="r6">svm_classifier</span><span class="r5">.</span><span class="r6">fit(X_train_scaled, y_train)</span><span class="r8">                                                                                              </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r9"># Evaluate the model on the test set</span><span class="r8">                                                                                                     </span>  
+  <span class="r6">y_pred </span><span class="r5">=</span><span class="r6"> svm_classifier</span><span class="r5">.</span><span class="r6">predict(X_test_scaled)</span><span class="r8">                                                                                           </span>  
+  <span class="r6">accuracy </span><span class="r5">=</span><span class="r6"> accuracy_score(y_test, y_pred)</span><span class="r8">                                                                                                </span>  
+  <span class="r6">report </span><span class="r5">=</span><span class="r6"> classification_report(y_test, y_pred)</span><span class="r8">                                                                                           </span>  
+  <span class="r8">                                                                                                                                         </span>  
+  <span class="r6">print(</span><span class="r10">f&quot;Accuracy: {</span><span class="r6">accuracy</span><span class="r10">:.4f}&quot;</span><span class="r6">)</span><span class="r8">                                                                                                       </span>  
+  <span class="r6">print(</span><span class="r10">&quot;Classification Report:&quot;</span><span class="r6">)</span><span class="r8">                                                                                                          </span>  
+  <span class="r6">print(report)</span><span class="r8">                                                                                                                            </span>  
+ ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+<span class="r3">Execution logs:</span>
+Accuracy: 0.9654
+Classification Report:
+              precision    recall  f1-score   support
+
+         1.0       0.98      0.98      0.98        66
+         2.0       0.78      0.94      0.85        50
+         3.0       0.97      0.97      0.97        62
+         4.0       0.95      0.93      0.94        59
+         5.0       0.94      0.92      0.93        64
+         6.0       1.00      0.95      0.97        59
+         7.0       1.00      0.92      0.96        53
+         8.0       1.00      0.99      0.99        70
+         9.0       1.00      1.00      1.00        56
+        10.0       0.98      0.95      0.96        55
+        11.0       0.95      0.99      0.97        78
+        12.0       1.00      1.00      1.00        67
+        13.0       0.88      0.97      0.92        58
+        14.0       0.97      0.91      0.94        66
+        15.0       1.00      1.00      1.00        54
+        16.0       0.93      0.88      0.90        59
+        17.0       0.98      1.00      0.99        60
+        18.0       1.00      1.00      1.00        52
+        19.0       0.97      1.00      0.98        62
+        20.0       0.96      0.96      0.96        54
+        21.0       1.00      0.98      0.99        51
+        22.0       0.93      0.91      0.92        57
+        23.0       1.00      0.98      0.99        54
+        24.0       0.98      1.00      0.99        58
+        25.0       1.00      1.00      1.00        69
+        26.0       0.97      0.96      0.96        67
+
+    accuracy                           0.97      1560
+   macro avg       0.97      0.96      0.96      1560
+weighted avg       0.97      0.97      0.97      1560
+
+
+Out: None
+<span class="r12">[Step 2: Duration 12.77 seconds| Input tokens: 4,096 | Output tokens: 662]</span>
+<span class="r1">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ </span><span class="r3">Step </span><span class="r4">3</span><span class="r1"> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span class="r13">Error in code parsing:</span>
+<span class="r13">Your code snippet is invalid, because the regex pattern ```(?:py|python)?\s*\</span><span class="r14">n</span><span class="r13">(.*?)\n``` was not found in it.</span>
+<span class="r13">            Here is your code snippet:</span>
+<span class="r13">            ### Detailed Steps for the Provided Code</span>
+
+<span class="r13">The provided code is a Python script that demonstrates how to load a dataset, split it into training and testing sets, preprocess the </span>
+<span class="r13">features by scaling them, train a Support Vector Machine (SVM) classifier using the linear kernel, and evaluate the model&#x27;s performance on </span>
+<span class="r13">the test set. Below is a step-by-step breakdown of what each part of the code does:</span>
+
+<span class="r4">1</span><span class="r13">. **Importing Required Libraries**:</span>
+<span class="r13">   ```python</span>
+<span class="r13">   import pandas as pd</span>
+<span class="r13">   from sklearn.model_selection import train_test_split</span>
+<span class="r13">   from sklearn.preprocessing import StandardScaler</span>
+<span class="r13">   from sklearn.svm import SVC</span>
+<span class="r13">   from sklearn.metrics import accuracy_score, classification_report</span>
+<span class="r13">   ```</span>
+<span class="r13">   These libraries are imported to handle data manipulation (pandas), split the dataset (train_test_split), scale features (StandardScaler), </span>
+<span class="r13">train the SVM classifier (SVC), and evaluate the model&#x27;s performance (accuracy_score, classification_report).</span>
+
+<span class="r4">2</span><span class="r13">. **Loading the Dataset**:</span>
+<span class="r13">   ```python</span>
+<span class="r13">   # Load the dataset</span>
+<span class="r13">   features, targets = </span><span class="r14">read_dataset</span><span class="r13">(</span><span class="r15">&quot;./datasets/ISOLET/&quot;</span><span class="r13">)</span>
+<span class="r13">   ```</span>
+<span class="r13">   This line calls a custom function `read_dataset` to load the dataset from the specified path. The function should return two variables: </span>
+<span class="r13">`features` (the input data) and `targets` (the corresponding labels).</span>
+
+<span class="r4">3</span><span class="r13">. **Splitting the Dataset**:</span>
+<span class="r13">   ```python</span>
+<span class="r13">   # Split the data into training and testing sets</span>
+<span class="r13">   X_train, X_test, y_train, y_test = </span><span class="r14">train_test_split</span><span class="r13">(features, targets, </span><span class="r16">test_size</span><span class="r13">=</span><span class="r4">0.2</span><span class="r13">, </span><span class="r16">random_state</span><span class="r13">=</span><span class="r4">42</span><span class="r13">)</span>
+<span class="r13">   ```</span>
+<span class="r13">   The dataset is split into </span><span class="r4">80</span><span class="r13">% training data (`X_train`, `y_train`) and </span><span class="r4">20</span><span class="r13">% testing data (`X_test`, `y_test`). The `test_size` parameter </span>
+<span class="r13">specifies the proportion of the dataset to include in the test split. Setting it to </span><span class="r4">0.2</span><span class="r13"> means that </span><span class="r4">20</span><span class="r13">% of the data will be used for testing, </span>
+<span class="r13">while </span><span class="r4">80</span><span class="r13">% will be used for training. The `random_state` parameter ensures reproducibility by fixing the random seed.</span>
+
+<span class="r4">4</span><span class="r13">. **Preprocessing the Features**:</span>
+<span class="r13">   ```python</span>
+<span class="r13">   # Preprocess the data (scaling)</span>
+<span class="r13">   scaler = </span><span class="r14">StandardScaler</span><span class="r13">()</span>
+<span class="r13">   X_train_scaled = </span><span class="r14">scaler.fit_transform</span><span class="r13">(X_train)</span>
+<span class="r13">   X_test_scaled = </span><span class="r14">scaler.transform</span><span class="r13">(X_test)</span>
+<span class="r13">   ```</span>
+<span class="r13">   The features are scaled using `StandardScaler` to ensure that each feature has zero mean and unit variance. This step is important because</span>
+<span class="r13">SVMs are sensitive to the scale of the input features.</span>
+
+<span class="r4">5</span><span class="r13">. **Training the SVM Classifier**:</span>
+<span class="r13">   ```python</span>
+<span class="r13">   # Train a Support Vector Machine classifier</span>
+<span class="r13">   svm_classifier = </span><span class="r14">SVC</span><span class="r13">(</span><span class="r16">kernel</span><span class="r13">=</span><span class="r15">&#x27;linear&#x27;</span><span class="r13">)</span>
+<span class="r13">   </span><span class="r14">svm_classifier.fit</span><span class="r13">(X_train_scaled, y_train)</span>
+<span class="r13">   ```</span>
+<span class="r13">   A linear kernel SVM classifier is created and trained on the scaled training data (`X_train_scaled`, `y_train`). The `kernel` parameter </span>
+<span class="r13">specifies the type of kernel to be used. Here, </span><span class="r15">&#x27;linear&#x27;</span><span class="r13"> means a linear kernel.</span>
+
+<span class="r4">6</span><span class="r13">. **Evaluating the Model**:</span>
+<span class="r13">   ```python</span>
+<span class="r13">   # Evaluate the model on the test set</span>
+<span class="r13">   y_pred = </span><span class="r14">svm_classifier.predict</span><span class="r13">(X_test_scaled)</span>
+<span class="r13">   accuracy = </span><span class="r14">accuracy_score</span><span class="r13">(y_test, y_pred)</span>
+<span class="r13">   report = </span><span class="r14">classification_report</span><span class="r13">(y_test, y_pred)</span>
+
+<span class="r13">   </span><span class="r14">print</span><span class="r13">(f&quot;Accuracy: {accuracy:.4f}&quot;)</span>
+<span class="r13">   </span><span class="r14">print</span><span class="r13">(</span><span class="r15">&quot;Classification Report:&quot;</span><span class="r13">)</span>
+<span class="r13">   </span><span class="r14">print</span><span class="r13">(report)</span>
+<span class="r13">   ```</span>
+<span class="r13">   The model is evaluated on the scaled test data (`X_test_scaled`, `y_test`). Predictions are made using the trained SVM classifier, and </span>
+<span class="r13">then the accuracy score and classification report are calculated. The classification report provides detailed metrics such as precision, </span>
+<span class="r13">recall, f1-score, and support for each class.</span>
+
+<span class="r13">### Conclusion</span>
+<span class="r13">The provided code is a complete workflow for training an SVM classifier on a dataset, including data loading, preprocessing, model training, </span>
+<span class="r13">and evaluation. By following these steps, you can train a robust machine learning model to classify the ISOLET dataset effectively.</span>
+<span class="r13">            Make sure to include code with the correct pattern, for instance:</span>
+<span class="r13">            Thoughts: Your thoughts</span>
+<span class="r13">            Code:</span>
+<span class="r13">            ```py</span>
+<span class="r13">            # Your python code here</span>
+<span class="r13">            ```&lt;</span><span class="r17">end_code</span><span class="r13">&gt;</span>
+<span class="r13">Make sure to provide correct code blobs.</span>
+<span class="r12">[Step 3: Duration 27.25 seconds| Input tokens: 6,144 | Output tokens: 1,467]</span>
+<span class="r13">Reached max steps.</span>
+<span class="r12">[Step 4: Duration 38.80 seconds| Input tokens: 8,192 | Output tokens: 1,693]</span>
+</code></pre>
+</body>
+</html>
